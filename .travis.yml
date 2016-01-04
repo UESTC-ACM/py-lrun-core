@@ -9,7 +9,7 @@ python:
 
 install:
   - "sudo apt-get update"
-  - "sudo apt-get install build-essential pkg-config ruby rake libseccomp-dev -y"
+  - "sudo apt-get install build-essential pkg-config ruby rake libseccomp2 libseccomp-dev -y"
   - "cd lib/lrun/"
   - "LRUN_GROUP=travis make install"
 
