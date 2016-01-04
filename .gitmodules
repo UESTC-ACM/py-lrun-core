@@ -1,0 +1,3 @@
+[submodule "lib/lrun"]
+	path = lib/lrun
+	url = https://github.com/quark-zju/lrun.git

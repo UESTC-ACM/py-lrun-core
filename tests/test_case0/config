@@ -1,0 +1,4 @@
+gnu-gcc 1000 32 data AC
+gnu-g++ 1000 32 data AC
+gnu-g++11 1000 32 data AC
+java 3000 32 data AC
