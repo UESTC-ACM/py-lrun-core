@@ -16,10 +16,12 @@ def RunTest(test_case_file):
             wrapped = line.strip()
             if not wrapped:
                 continue
-            language_token, time, memory, data, expected = wrapped.split(" ")
+            language_token, source_file, time, memory, data, expected = wrapped.split(" ")
             compiler.Compile(language_token = language_token, \
+                             source_file = source_file, \
                              work_dir = work_dir)
             actual = runner.Run(language_token = language_token, \
+                                source_file = source_file, \
                                 cpu_time = int(time) / 1000.0, \
                                 real_time = int(time) / 1000.0 * 2, \
                                 memory = int(memory) * 1024 * 1024, \
@@ -40,3 +42,4 @@ def RunTest(test_case_file):
         print "testing " + test_case_file + " \033[0;31mFAILED\033[m"
 
 RunTest("test_case0")
+RunTest("test_case1")

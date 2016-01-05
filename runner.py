@@ -22,9 +22,8 @@ def Judge(input_file, std_output_file, user_output_file, spj = False):
     return True
 
 
-def Run(language_token, cpu_time, real_time, memory, data_dir, test_case, work_dir):
+def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir):
     work_dir = path.abspath(work_dir)
-    source_file = util.judge_languages[language_token]["source_file"]
     running_command = util.judge_languages[language_token]["executive_command"] \
                           .format(source_file = source_file, work_dir = work_dir)
     backlist = util.judge_languages[language_token]["backlist"]

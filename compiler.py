@@ -18,7 +18,7 @@ class CompileError(Exception):
         super(CompileError, self).__init__(message)
 
 
-def Compile(language_token, work_dir):
+def Compile(language_token, source_file, work_dir):
     """
     Compile specific language with provided source code.
     
@@ -27,9 +27,10 @@ def Compile(language_token, work_dir):
       source_file: the source code file name, with relative file name starts with currnet folder(.)
     """
     work_dir = path.abspath(work_dir)
-    source_file = util.judge_languages[language_token]["source_file"]
     compile_command = util.judge_languages[language_token]["compile_command"] \
-                          .format(source_file = source_file, work_dir = work_dir)
+                          .format(source_file = source_file, \
+                                  extension = util.judge_languages[language_token]["extension"], \
+                                  work_dir = work_dir)
     status, output = commands.getstatusoutput(compile_argument.format(command = compile_command))
 
     pivot = output.rfind("MEMORY   ")
