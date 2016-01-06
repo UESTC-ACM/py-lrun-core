@@ -9,7 +9,7 @@ import lrun
 
 running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} " \
                    "--max-memory {memory} --network false --remount-dev true --reset-env true " \
-                   "--syscalls '{backlist}' --max-nprocess 20 {command} < {input_file} > " \
+                   "--syscalls '{blacklist}' --max-nprocess 20 {command} < {input_file} > " \
                    "{user_output_file} 3>&2"
 user_output_file = "user.out"
 
@@ -26,13 +26,13 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
     work_dir = path.abspath(work_dir)
     running_command = util.judge_languages[language_token]["executive_command"] \
                           .format(source_file = source_file, work_dir = work_dir)
-    backlist = util.judge_languages[language_token]["backlist"]
+    blacklist = util.judge_languages[language_token]["blacklist"]
     input_file = path.abspath(data_dir + "/" + test_case + ".in")
     output_file = path.abspath(work_dir + "/" + user_output_file)
     status, output = commands.getstatusoutput(running_argument.format(cpu_time = cpu_time, \
                                                                       real_time = real_time, \
                                                                       memory = memory, \
-                                                                      backlist = backlist, \
+                                                                      blacklist = blacklist, \
                                                                       command = running_command, \
                                                                       input_file = input_file, \
                                                                       user_output_file = output_file))
