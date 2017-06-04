@@ -21,7 +21,7 @@ class CompileError(Exception):
 def Compile(language_token, source_file, work_dir):
     """
     Compile specific language with provided source code.
-    
+
     Args:
       language_token: the language token provided in util.py, as the key of judge language list
       source_file: the source code file name, with relative file name starts with currnet folder(.)
@@ -42,6 +42,6 @@ def Compile(language_token, source_file, work_dir):
     if result["EXITCODE"] != "0" or result["TERMSIG"] != "0" \
        or result["SIGNALED"] != "0" or result["EXCEED"] != "none":
         raise CompileError("unknown reason")
-    
+
     return True
 

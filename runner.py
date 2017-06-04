@@ -4,6 +4,7 @@
 from os import path
 import commands
 import util
+import compiler
 import lrun
 
 
@@ -14,7 +15,7 @@ running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} "
 user_output_file = "user.out"
 
 
-def Judge(input_file, std_output_file, user_output_file, spj = False):
+def DoDiff(input_file, std_output_file, user_output_file, spj):
     if spj:
         pass
     else:
@@ -22,7 +23,22 @@ def Judge(input_file, std_output_file, user_output_file, spj = False):
     return True
 
 
-def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir):
+def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, spj = False):
+    compiler.Compile(language_token = language_token, \
+                     source_file = source_file, \
+                     work_dir = work_dir)
+    return Run(language_token = language_token, \
+               source_file = source_file, \
+               cpu_time = int(time_limit) / 1000.0, \
+               real_time = int(time_limit) / 1000.0 * 2, \
+               memory = int(memory_limit) * 1024, \
+               test_case = test_case, \
+               data_dir = data_dir, \
+               work_dir = work_dir, \
+               spj = spj)
+
+
+def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir, spj):
     work_dir = path.abspath(work_dir)
     running_command = util.judge_languages[language_token]["executive_command"] \
                           .format(source_file = source_file, work_dir = work_dir)
@@ -57,7 +73,7 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
        or result["TERMSIG"] != "0" or lrun_error:
         return "RE"
 
-    if Judge(test_case + ".in", test_case + ".out", user_output_file):
+    if DoDiff(test_case + ".in", test_case + ".out", user_output_file, spj):
         return "AC\n" + str(result)
     else:
         return "WA"

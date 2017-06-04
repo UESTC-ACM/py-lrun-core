@@ -2,7 +2,6 @@
 # Integration test cases.
 #
 import traceback
-import compiler
 import runner
 
 
@@ -17,17 +16,14 @@ def RunTest(test_case_file):
             if not wrapped:
                 continue
             language_token, source_file, time, memory, data, expected = wrapped.split(" ")
-            compiler.Compile(language_token = language_token, \
-                             source_file = source_file, \
-                             work_dir = work_dir)
-            actual = runner.Run(language_token = language_token, \
-                                source_file = source_file, \
-                                cpu_time = int(time) / 1000.0, \
-                                real_time = int(time) / 1000.0 * 2, \
-                                memory = int(memory) * 1024 * 1024, \
-                                test_case = data, \
-                                data_dir = work_dir, \
-                                work_dir = work_dir)
+            actual = runner.Judge(
+                work_dir = work_dir, \
+                data_dir = work_dir, \
+                language_token = language_token, \
+                source_file = source_file, 
+                time_limit = int(time), \
+                memory_limit = int(memory), \
+                test_case = data)
             assert actual.startswith(expected), \
                 "test case'%s': expected answer is %s but actual answer is %s." \
                 % (wrapped, expected, actual)
