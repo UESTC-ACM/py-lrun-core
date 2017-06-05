@@ -23,6 +23,8 @@ parser.add_argument('-m', '--memory_limit', required = True, type = int, dest = 
                     help='the memory limit, formatted as millisecond')
 parser.add_argument('-f', '--test_file', required = True, type = str, dest = 'test_case',
                     help='the input and output file, without extension')
+parser.add_argument('-c', '--compile', action = 'store_true', dest = 'compile',
+                    help='needs compile the source code or not')
 
 
 args = parser.parse_args()
@@ -32,5 +34,6 @@ print runner.Judge(work_dir = args.work_dir, \
                    source_file = args.source_file, \
                    time_limit = args.time_limit, \
                    memory_limit = args.memory_limit, \
-                   test_case = args.test_case)
+                   test_case = args.test_case,
+                   compile = args.compile)
 
