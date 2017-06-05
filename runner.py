@@ -23,10 +23,15 @@ def DoDiff(input_file, std_output_file, user_output_file, spj):
     return True
 
 
-def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, spj = False):
-    compiler.Compile(language_token = language_token, \
-                     source_file = source_file, \
-                     work_dir = work_dir)
+def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, compile = True, spj = False):
+    work_dir = path.abspath(work_dir)
+    if compile:
+        try:
+            compiler.Compile(language_token = language_token, \
+                             source_file = source_file, \
+                             work_dir = work_dir)
+        except compiler.CompileError as e:
+            return "CE\n" + e.message
     return Run(language_token = language_token, \
                source_file = source_file, \
                cpu_time = int(time_limit) / 1000.0, \
@@ -35,11 +40,13 @@ def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_li
                test_case = test_case, \
                data_dir = data_dir, \
                work_dir = work_dir, \
+               compile = compile,
                spj = spj)
 
 
-def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir, spj):
+def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir, compile, spj):
     work_dir = path.abspath(work_dir)
+    data_dir = path.abspath(data_dir)
     running_command = util.judge_languages[language_token]["executive_command"] \
                           .format(source_file = source_file, work_dir = work_dir)
     blacklist = util.judge_languages[language_token]["blacklist"]
