@@ -23,7 +23,7 @@ parser.add_argument('-m', '--memory_limit', required = True, type = int, dest = 
                     help='the memory limit, formatted as millisecond')
 parser.add_argument('-f', '--test_file', required = True, type = str, dest = 'test_case',
                     help='the input and output file, without extension')
-parser.add_argument('-c', '--compile', action = 'store_false', dest = 'compile',
+parser.add_argument('-c', '--compile', action = 'store_true', dest = 'compile',
                     help='needs compile the source code or not')
 
 
