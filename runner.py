@@ -23,7 +23,7 @@ def DoDiff(input_file, std_output_file, user_output_file, spj):
     return True
 
 
-def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, compile = True, spj = False):
+def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, compile = False, spj = False):
     work_dir = path.abspath(work_dir)
     if compile:
         try:
