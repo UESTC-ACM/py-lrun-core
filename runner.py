@@ -10,8 +10,7 @@ import lrun
 
 running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} " \
                    "--max-memory {memory} --network false --remount-dev true --reset-env true " \
-                   "--syscalls '{blacklist}' --max-nprocess 20 {command} < {input_file} > " \
-                   "{user_output_file} 3>&2"
+                   "--syscalls '{blacklist}' {command} 3>&2"
 user_output_file = "user.out"
 
 
@@ -40,25 +39,25 @@ def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_li
                test_case = test_case, \
                data_dir = data_dir, \
                work_dir = work_dir, \
-               compile = compile,
                spj = spj)
 
 
-def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir, compile, spj):
+def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir, spj):
     work_dir = path.abspath(work_dir)
     data_dir = path.abspath(data_dir)
-    running_command = util.judge_languages[language_token]["executive_command"] \
-                          .format(source_file = source_file, work_dir = work_dir)
-    blacklist = util.judge_languages[language_token]["blacklist"]
     input_file = path.abspath(data_dir + "/" + test_case + ".in")
     output_file = path.abspath(work_dir + "/" + user_output_file)
+    running_command = util.judge_languages[language_token]["executive_command"] \
+                          .format(source_file = source_file,
+                                  work_dir = work_dir,
+                                  input_file = input_file,
+                                  output_file = output_file)
+    blacklist = util.judge_languages[language_token]["blacklist"]
     status, output = commands.getstatusoutput(running_argument.format(cpu_time = cpu_time, \
                                                                       real_time = real_time, \
                                                                       memory = memory, \
                                                                       blacklist = blacklist, \
-                                                                      command = running_command, \
-                                                                      input_file = input_file, \
-                                                                      user_output_file = output_file))
+                                                                      command = running_command))
 
     pivot = output.rfind("MEMORY   ")
     if pivot == -1:
@@ -77,7 +76,8 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
         else:
             return "SE"
     if result["EXITCODE"] != "0" or result["SIGNALED"] != "0" \
-       or result["TERMSIG"] != "0" or lrun_error:
+       or result["TERMSIG"] != "0" or lrun_error or status != 0:
+        print result, '\n', status, '\n', lrun_error
         return "RE"
 
     if DoDiff(test_case + ".in", test_case + ".out", user_output_file, spj):
