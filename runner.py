@@ -72,7 +72,7 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
     if result["EXCEED"] != "none":
         if result["EXCEED"] == "memory":
             return "MLE"
-        elif result["EXCEED"] in ["cpu_time", "real_time"]:
+        elif result["EXCEED"] in ["CPU_TIME", "REAL_TIME"]:
             return "TLE"
         else:
             return "SE"
