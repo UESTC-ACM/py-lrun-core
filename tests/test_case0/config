@@ -1,4 +1,4 @@
-gnu-gcc main 1000 32768 data AC
-gnu-g++ main 1000 32768 data AC
-gnu-g++11 main 1000 32768 data AC
-java Main 3000 32768 data AC
+gnu-gcc main 1000 32768 32768 data AC
+gnu-g++ main 1000 32768 32768 data AC
+gnu-g++11 main 1000 32768 32768 data AC
+java Main 3000 32768 32768 data AC

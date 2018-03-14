@@ -15,7 +15,7 @@ def RunTest(test_case_file):
       wrapped = line.strip()
       if not wrapped:
         continue
-      language_token, source_file, time, memory, data, expected = wrapped.split(
+      language_token, source_file, time, memory, output_limit, data, expected = wrapped.split(
           " ")
       actual = runner.Judge(
           work_dir=work_dir,
@@ -24,6 +24,7 @@ def RunTest(test_case_file):
           source_file=source_file,
           time_limit=int(time),
           memory_limit=int(memory),
+          output_limit=int(output_limit),
           test_case=data,
           compile=True)
       assert actual.startswith(expected), \
@@ -41,7 +42,7 @@ def RunTest(test_case_file):
   return passed
 
 passed = True
-for i in range(0, 10):
+for i in range(0, 12):
   if not RunTest("test_case" + str(i)):
     passed = False
 exit(0 if passed else 1)

@@ -1,2 +1,2 @@
-gnu-gcc main 1000 32768 data CE
+gnu-gcc main 1000 32768 32768 data CE
 

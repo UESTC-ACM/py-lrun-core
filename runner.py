@@ -7,7 +7,7 @@ import util
 import compiler
 import lrun
 
-running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} " \
+running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} --max-output {output_limit} " \
                    "--max-memory {memory} --network false --remount-dev true --reset-env true " \
                    "--syscalls '{blacklist}' {command} 3>&2"
 user_output_file = "user.out"
@@ -19,7 +19,7 @@ def DoDiff(input_file, std_output_file, user_output_file, spj):
     pass
   return True
 
-def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, compile=False, spj=False):
+def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, output_limit, test_case, compile=False, spj=False):
   if int(memory_limit) < 1024:
     return "MLE"
   memory_limit = int(memory_limit) // 4 * 4
@@ -36,12 +36,13 @@ def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_li
              cpu_time=int(time_limit) / 1000.0,
              real_time=int(time_limit) / 1000.0 * 2,
              memory=int(memory_limit) * 1024,
+             output_limit = int(output_limit) * 1024,
              test_case=test_case,
              data_dir=data_dir,
              work_dir=work_dir,
              spj=spj)
 
-def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir, spj):
+def Run(language_token, source_file, cpu_time, real_time, memory, output_limit, data_dir, test_case, work_dir, spj):
   work_dir = path.abspath(work_dir)
   data_dir = path.abspath(data_dir)
   input_file = path.abspath(data_dir + "/" + test_case + ".in")
@@ -55,6 +56,7 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
   status, output = commands.getstatusoutput(running_argument.format(cpu_time=cpu_time,
                                                                     real_time=real_time,
                                                                     memory=memory,
+                                                                    output_limit=output_limit,
                                                                     blacklist=blacklist,
                                                                     command=running_command))
   pivot = output.rfind("MEMORY   ")
@@ -70,6 +72,8 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
       return "MLE"
     elif result["EXCEED"] in ["CPU_TIME", "REAL_TIME"]:
       return "TLE"
+    elif result["EXCEED"] == "OUTPUT":
+      return "OLE"
     else:
       return "SE"
   if result["EXITCODE"] != "0" or result["SIGNALED"] != "0" \
