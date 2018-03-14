@@ -22,6 +22,7 @@ def DoDiff(input_file, std_output_file, user_output_file, spj):
 def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, compile=False, spj=False):
   if memory_limit < 1024:
     return "MLE"
+  memory_limit = int(memory_limit) // 4 * 4
   work_dir = path.abspath(work_dir)
   if compile:
     try:
