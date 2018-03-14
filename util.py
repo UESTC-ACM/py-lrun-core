@@ -15,7 +15,13 @@ java_language_blacklist = "!ugetrlimit,uname,rt_sigprocmask,sigprocmask," + \
                           "sync_file_range,syncfs:k,unshare,setns,clone[a&268435456==268435456]," + \
                           "query_module,sysinfo,syslog,sysfs,write,fork,vfork,munmap,set_thread_area"
 
-python_language_blacklist = "!ugetrlimit"
+python_language_blacklist = "!ugetrlimit,uname,rt_sigprocmask,sigprocmask," + \
+                            "set_robust_list,openat," + \
+                            "getrlimit,getuid32,getgid32,geteuid32,getegid32,set_tid_address," + \
+                            "flock,ptrace,sync,fdatasync,fsync,msync," + \
+                            "sync_file_range,syncfs:k,unshare,setns,clone[a&268435456==268435456]," + \
+                            "query_module,sysinfo,syslog,sysfs,fork,vfork,munmap,set_thread_area,execve," + \
+                            "writev"
 
 
 judge_languages = {

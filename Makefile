@@ -6,6 +6,6 @@ test:
 
 clean:
 	rm -rf *.log
-	rm -rf tests/test_case[0-20]/*.class
-	rm -rf tests/test_case[0-20]/*.bin
-	rm -rf tests/test_case[0-20]/user.out
+	rm -rf tests/test_case[0-21]/*.class
+	rm -rf tests/test_case[0-21]/*.bin
+	rm -rf tests/test_case[0-21]/user.out

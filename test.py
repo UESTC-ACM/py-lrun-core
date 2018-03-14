@@ -44,6 +44,7 @@ def RunTest(test_case_file):
   else:
     print "testing " + test_case_file + " \033[0;31mFAILED\033[m"
   return passed
+
 passed = True
 for i in range(0, 20):
   if not RunTest("test_case" + str(i)):
