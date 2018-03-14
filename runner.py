@@ -7,7 +7,7 @@ import util
 import compiler
 import lrun
 
-
+# --syscalls '{blacklist}' 
 running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} " \
                    "--max-memory {memory} --network false --remount-dev true --reset-env true " \
                    "--syscalls '{blacklist}' {command} 3>&2"
@@ -77,7 +77,6 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
             return "SE"
     if result["EXITCODE"] != "0" or result["SIGNALED"] != "0" \
        or result["TERMSIG"] != "0" or lrun_error or status != 0:
-        print result, '\n', status, '\n', lrun_error
         return "RE"
 
     if DoDiff(test_case + ".in", test_case + ".out", user_output_file, spj):

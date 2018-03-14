@@ -43,3 +43,5 @@ def RunTest(test_case_file):
 RunTest("test_case0")
 RunTest("test_case1")
 RunTest("test_case2")
+RunTest("test_case3")
+RunTest("test_case4")
