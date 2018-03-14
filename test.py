@@ -17,8 +17,6 @@ def RunTest(test_case_file):
         continue
       language_token, source_file, time, memory, data, expected = wrapped.split(
           " ")
-      if source_file != "Main":
-        continue
       actual = runner.Judge(
           work_dir=work_dir,
           data_dir=work_dir,
@@ -42,9 +40,8 @@ def RunTest(test_case_file):
     print "testing " + test_case_file + " \033[0;31mFAILED\033[m"
   return passed
 
-
 passed = True
-for i in range(0, 6):
+for i in range(0, 10):
   if not RunTest("test_case" + str(i)):
     passed = False
 exit(0 if passed else 1)

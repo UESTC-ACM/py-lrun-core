@@ -12,7 +12,6 @@ running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} "
                    "--syscalls '{blacklist}' {command} 3>&2"
 user_output_file = "user.out"
 
-
 def DoDiff(input_file, std_output_file, user_output_file, spj):
   if spj:
     pass
@@ -20,8 +19,9 @@ def DoDiff(input_file, std_output_file, user_output_file, spj):
     pass
   return True
 
-
 def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, compile=False, spj=False):
+  if memory_limit < 1024:
+    return "MLE"
   work_dir = path.abspath(work_dir)
   if compile:
     try:
@@ -39,7 +39,6 @@ def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_li
              data_dir=data_dir,
              work_dir=work_dir,
              spj=spj)
-
 
 def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir, spj):
   work_dir = path.abspath(work_dir)
@@ -66,7 +65,7 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
     lrun_error = None
   result = lrun.Parse(output[pivot:])
   if result["EXCEED"] != "none":
-    if result["EXCEED"] == "memory":
+    if result["EXCEED"] == "MEMORY":
       return "MLE"
     elif result["EXCEED"] in ["CPU_TIME", "REAL_TIME"]:
       return "TLE"
