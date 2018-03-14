@@ -17,6 +17,8 @@ def RunTest(test_case_file):
         continue
       language_token, source_file, time, memory, data, expected = wrapped.split(
           " ")
+      if source_file != "Main":
+        continue
       actual = runner.Judge(
           work_dir=work_dir,
           data_dir=work_dir,
