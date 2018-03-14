@@ -7,7 +7,7 @@ import util
 import compiler
 import lrun
 
-# --syscalls '{blacklist}' 
+# --syscalls '{blacklist}'
 running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} " \
                    "--max-memory {memory} --network false --remount-dev true --reset-env true " \
                    "--syscalls '{blacklist}' {command} 3>&2"
@@ -15,71 +15,71 @@ user_output_file = "user.out"
 
 
 def DoDiff(input_file, std_output_file, user_output_file, spj):
-    if spj:
-        pass
-    else:
-        pass
-    return True
+  if spj:
+    pass
+  else:
+    pass
+  return True
 
 
-def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, compile = False, spj = False):
-    work_dir = path.abspath(work_dir)
-    if compile:
-        try:
-            compiler.Compile(language_token = language_token, \
-                             source_file = source_file, \
-                             work_dir = work_dir)
-        except compiler.CompileError as e:
-            return "CE\n" + e.message
-    return Run(language_token = language_token, \
-               source_file = source_file, \
-               cpu_time = int(time_limit) / 1000.0, \
-               real_time = int(time_limit) / 1000.0 * 2, \
-               memory = int(memory_limit) * 1024, \
-               test_case = test_case, \
-               data_dir = data_dir, \
-               work_dir = work_dir, \
-               spj = spj)
+def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, test_case, compile=False, spj=False):
+  work_dir = path.abspath(work_dir)
+  if compile:
+    try:
+      compiler.Compile(language_token=language_token,
+                       source_file=source_file,
+                       work_dir=work_dir)
+    except compiler.CompileError as e:
+      return "CE\n" + e.message
+  return Run(language_token=language_token,
+             source_file=source_file,
+             cpu_time=int(time_limit) / 1000.0,
+             real_time=int(time_limit) / 1000.0 * 2,
+             memory=int(memory_limit) * 1024,
+             test_case=test_case,
+             data_dir=data_dir,
+             work_dir=work_dir,
+             spj=spj)
 
 
 def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test_case, work_dir, spj):
-    work_dir = path.abspath(work_dir)
-    data_dir = path.abspath(data_dir)
-    input_file = path.abspath(data_dir + "/" + test_case + ".in")
-    output_file = path.abspath(work_dir + "/" + user_output_file)
-    running_command = util.judge_languages[language_token]["executive_command"] \
-                          .format(source_file = source_file,
-                                  work_dir = work_dir,
-                                  input_file = input_file,
-                                  output_file = output_file)
-    blacklist = util.judge_languages[language_token]["blacklist"]
-    status, output = commands.getstatusoutput(running_argument.format(cpu_time = cpu_time, \
-                                                                      real_time = real_time, \
-                                                                      memory = memory, \
-                                                                      blacklist = blacklist, \
-                                                                      command = running_command))
+  work_dir = path.abspath(work_dir)
+  data_dir = path.abspath(data_dir)
+  input_file = path.abspath(data_dir + "/" + test_case + ".in")
+  output_file = path.abspath(work_dir + "/" + user_output_file)
+  running_command = util.judge_languages[language_token]["executive_command"] \
+                        .format(source_file=source_file,
+                                work_dir=work_dir,
+                                input_file=input_file,
+                                output_file=output_file)
+  blacklist = util.judge_languages[language_token]["blacklist"]
+  status, output = commands.getstatusoutput(running_argument.format(cpu_time=cpu_time,
+                                                                    real_time=real_time,
+                                                                    memory=memory,
+                                                                    blacklist=blacklist,
+                                                                    command=running_command))
 
-    pivot = output.rfind("MEMORY   ")
-    if pivot == -1:
-        return "SE"
-    if pivot:
-        lrun_error = output[ : pivot]
+  pivot = output.rfind("MEMORY   ")
+  if pivot == -1:
+    return "SE"
+  if pivot:
+    lrun_error = output[: pivot]
+  else:
+    lrun_error = None
+  result = lrun.Parse(output[pivot:])
+
+  if result["EXCEED"] != "none":
+    if result["EXCEED"] == "memory":
+      return "MLE"
+    elif result["EXCEED"] in ["CPU_TIME", "REAL_TIME"]:
+      return "TLE"
     else:
-        lrun_error = None
-    result = lrun.Parse(output[pivot : ])
+      return "SE"
+  if result["EXITCODE"] != "0" or result["SIGNALED"] != "0" \
+     or result["TERMSIG"] != "0" or lrun_error or status != 0:
+    return "RE"
 
-    if result["EXCEED"] != "none":
-        if result["EXCEED"] == "memory":
-            return "MLE"
-        elif result["EXCEED"] in ["CPU_TIME", "REAL_TIME"]:
-            return "TLE"
-        else:
-            return "SE"
-    if result["EXITCODE"] != "0" or result["SIGNALED"] != "0" \
-       or result["TERMSIG"] != "0" or lrun_error or status != 0:
-        return "RE"
-
-    if DoDiff(test_case + ".in", test_case + ".out", user_output_file, spj):
-        return "AC\n" + str(result)
-    else:
-        return "WA"
+  if DoDiff(test_case + ".in", test_case + ".out", user_output_file, spj):
+    return "AC\n" + str(result)
+  else:
+    return "WA"
