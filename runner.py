@@ -59,7 +59,6 @@ def Run(language_token, source_file, cpu_time, real_time, memory, output_limit, 
                                                                     output_limit=output_limit,
                                                                     blacklist=blacklist,
                                                                     command=running_command))
-
   pivot = output.rfind("MEMORY   ")
   if pivot == -1:
     return "SE"
