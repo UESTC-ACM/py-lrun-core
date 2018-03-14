@@ -40,11 +40,11 @@ def RunTest(test_case_file):
     print "testing " + test_case_file + " \033[0;32mPASSED\033[m"
   else:
     print "testing " + test_case_file + " \033[0;31mFAILED\033[m"
+  return passed
 
 
-RunTest("test_case0")
-RunTest("test_case1")
-RunTest("test_case2")
-RunTest("test_case3")
-RunTest("test_case4")
-RunTest("test_case5")
+passed = True
+for i in range(0, 6):
+  if not RunTest("test_case" + str(i)):
+    passed = False
+exit(0 if passed else 1)

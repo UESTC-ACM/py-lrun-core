@@ -17,4 +17,4 @@ install:
   - "cd ../../"
 
 script:
-  - "python test.py"
+  - "make test"
