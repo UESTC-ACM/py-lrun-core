@@ -23,10 +23,10 @@ parser.add_argument('-m', '--memory_limit', required = True, type = int, dest = 
                     help='the memory limit, formatted as Kilobyte')
 parser.add_argument('-f', '--test_file', required = True, type = str, dest = 'test_case',
                     help='the input and output file, without extension')
-parser.add_argument('-c', '--compile', action = 'store_true', dest = 'compile',
-                    help='needs compile the source code or not')
 parser.add_argument('-o', '--output_limit', required = True, type = int, dest = 'output_limit',
                     help='the output limit, formatted as Kilobyte')
+parser.add_argument('-c', '--compile', action = 'store_true', dest = 'compile',
+                    help='needs compile the source code or not')
 
 args = parser.parse_args()
 print runner.Judge(work_dir = args.work_dir, \
@@ -36,6 +36,6 @@ print runner.Judge(work_dir = args.work_dir, \
                    time_limit = args.time_limit, \
                    memory_limit = args.memory_limit, \
                    test_case = args.test_case, \
-                   compile = args.compile, \
-                   output_limit = args.output_limit)
+                   output_limit = args.output_limit, \
+                   compile = args.compile)
 
