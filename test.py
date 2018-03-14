@@ -4,6 +4,10 @@
 import traceback
 import runner
 
+def CheckCompileOrNot( language_token ):
+  if language_token == "python2" or language_token == "python3":
+    return False
+  return True
 
 def RunTest(test_case_file):
   fp = open("tests/" + test_case_file + "/config", "r")
@@ -26,7 +30,7 @@ def RunTest(test_case_file):
           memory_limit=int(memory),
           output_limit=int(output_limit),
           test_case=data,
-          compile=True)
+          compile=CheckCompileOrNot(language_token))
       assert actual.startswith(expected), \
           "test case'%s': expected answer is %s but actual answer is %s." \
           % (wrapped, expected, actual)
@@ -40,9 +44,8 @@ def RunTest(test_case_file):
   else:
     print "testing " + test_case_file + " \033[0;31mFAILED\033[m"
   return passed
-
 passed = True
-for i in range(0, 12):
+for i in range(0, 20):
   if not RunTest("test_case" + str(i)):
     passed = False
 exit(0 if passed else 1)

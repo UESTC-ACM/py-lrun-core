@@ -14,6 +14,10 @@ java_language_blacklist = "!ugetrlimit,uname,rt_sigprocmask,sigprocmask," + \
                           "flock,ptrace,sync,fdatasync,fsync,msync," + \
                           "sync_file_range,syncfs:k,unshare,setns,clone[a&268435456==268435456]," + \
                           "query_module,sysinfo,syslog,sysfs,write,fork,vfork,munmap,set_thread_area"
+
+python_language_blacklist = "!ugetrlimit"
+
+
 judge_languages = {
     "gnu-gcc": {
         "name": "GNU GCC",
@@ -53,5 +57,19 @@ judge_languages = {
         "executive_command": "bash -c \"java -cp {work_dir} -Djava.security.manager " +
                              "-Djava.security.policy==%s {source_file} \"" % (path.abspath(".") +
                                                                             " < {input_file} > {output_file}"),
+    },
+    "python3": {
+        "name": "python3",
+        "extension": "py",
+        "id": "4",
+        "blacklist": python_language_blacklist,
+        "executive_command": "python3 {work_dir}/{source_file}.py < {input_file} > {output_file}",
+    },
+    "python2": {
+        "name": "python2",
+        "extension": "py",
+        "id": "4",
+        "blacklist": python_language_blacklist,
+        "executive_command": "python2 {work_dir}/{source_file}.py < {input_file} > {output_file}",
     },
 }
