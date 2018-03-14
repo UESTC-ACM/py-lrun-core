@@ -7,7 +7,6 @@ import util
 import compiler
 import lrun
 
-# --syscalls '{blacklist}'
 running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} " \
                    "--max-memory {memory} --network false --remount-dev true --reset-env true " \
                    "--syscalls '{blacklist}' {command} 3>&2"
@@ -58,7 +57,6 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
                                                                     memory=memory,
                                                                     blacklist=blacklist,
                                                                     command=running_command))
-
   pivot = output.rfind("MEMORY   ")
   if pivot == -1:
     return "SE"
@@ -67,7 +65,6 @@ def Run(language_token, source_file, cpu_time, real_time, memory, data_dir, test
   else:
     lrun_error = None
   result = lrun.Parse(output[pivot:])
-
   if result["EXCEED"] != "none":
     if result["EXCEED"] == "memory":
       return "MLE"

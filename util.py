@@ -21,7 +21,7 @@ judge_languages = {
         "extension": "c",
         "id": "1",
         "blacklist": c_language_blacklist,
-        "compile_command": "gcc -static -w -O2 -DONLINE_JUDGE --std=c99 " +
+        "compile_command": "gcc -static -w -O2 -DONLINE_JUDGE --std=c99 -fmax-errors=15 " +
                            "{work_dir}/{source_file}.{extension} -lm -o " +
                            "{work_dir}/{source_file}.bin",
         "executive_command": "{work_dir}/{source_file}.bin < {input_file} > {output_file}",
@@ -31,7 +31,7 @@ judge_languages = {
         "extension": "cc",
         "id": "2",
         "blacklist": c_language_blacklist,
-        "compile_command": "g++ -static -w -O2 -DONLINE_JUDGE " +
+        "compile_command": "g++ -static -w -O2 -DONLINE_JUDGE -fmax-errors=15 " +
                            "{work_dir}/{source_file}.{extension} -o " +
                            "{work_dir}/{source_file}.bin",
         "executive_command": "{work_dir}/{source_file}.bin < {input_file} > {output_file}",
@@ -41,7 +41,7 @@ judge_languages = {
         "extension": "cc",
         "id": "3",
         "blacklist": c_language_blacklist,
-        "compile_command": "g++ -static -w -O2 -DONLINE_JUDGE --std=gnu++0x " +
+        "compile_command": "g++ -static -w -O2 -DONLINE_JUDGE --std=gnu++0x -fmax-errors=15 " +
                            "{work_dir}/{source_file}.{extension} -o {work_dir}/{source_file}.bin",
         "executive_command": "{work_dir}/{source_file}.bin < {input_file} > {output_file}",
     },
