@@ -18,7 +18,7 @@ java_language_blacklist = "!ugetrlimit,uname,rt_sigprocmask,sigprocmask," + \
 python_language_blacklist = "!execve:k,flock:k,ptrace:k,sync:k,fdatasync:k,fsync:k,msync:k," + \
                             "sync_file_range:k,syncfs:k,unshare:k,setns:k,clone:k,query_module:k,syslog:k,sysfs:k," + \
                             "set_thread_area:k,fork:k,vfork:k,getegid32:k,geteuid32:k,getuid32:k," + \
-                            "openat:k,sigprocmask:k,ugetrlimit:k,writev:k,write,sysinfo,getrlimit,munmap," + \
+                            "openat:k,sigprocmask:k,ugetrlimit:k,writev:k,sysinfo,getrlimit,munmap," + \
                             "set_robust_list,rt_sigprocmask,ugetrlimit,getgid32,set_tid_address,clone[a&268435456==268435456]"
 
 
@@ -59,8 +59,7 @@ judge_languages = {
         "blacklist": java_language_blacklist,
         "compile_command": "javac {work_dir}/{source_file}.{extension} -d {work_dir}",
         "executive_command": "bash -c \"java -cp {work_dir} -Djava.security.manager " +
-                             "-Djava.security.policy==%s {source_file} \"" % (path.abspath(".")) +
-                             " < {input_file} > {output_file}",
+                             "-Djava.security.policy==%s {source_file} < {input_file} > {output_file} \" " % (path.abspath(".") ),
     },
     "python3": {
         "name": "python3",
