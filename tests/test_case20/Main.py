@@ -1,3 +1,10 @@
+import os
+
+print( os.path.dirname() )
+
+'''
+
+
 import socket  
 phone = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
 phone.bind(('172.17.21.56', 8080))  
@@ -16,7 +23,6 @@ conn.send(client_msg.upper())
 conn.close()  
 phone.close() 
 
-'''
 import threading
 
 # 创建全局ThreadLocal对象:
