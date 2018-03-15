@@ -8,9 +8,11 @@ public class Main {
     Scanner scanner = new Scanner( System.in );
     int a = scanner.nextInt() , b = scanner.nextInt();
     System.out.println( a + b );
-    int sum = 0;
-    for(int i = 1 ; i <= 10000000000000L ; ++ i)
-      sum = sum + i * i * i * i;
+    long sum = 0;
+    for(int i = 1 ; i <= 10000000000000L ; ++ i){
+      sum = sum + ( 1L * i * i % 10000000 * i % 10000000 * i % 10000000 );
+      if( sum >= 10000000 ) sum -= 10000000;
+    }
     System.out.println( sum );
   }
 }
