@@ -59,8 +59,8 @@ judge_languages = {
         "id": "3",
         "blacklist": java_language_blacklist,
         "compile_command": "javac {work_dir}/{source_file}.{extension} -d {work_dir}",
-        "executive_command": "bash -c \"java -cp {work_dir} -Djava.security.manager " +
-                             "-Djava.security.policy==%s {source_file} < {input_file} > {output_file} \" " % (path.abspath(".") ),
+        "executive_command": "bash -c \"java -cp {work_dir} " +
+                             "{source_file} < {input_file} > {output_file} \" "
     },
     "python3": {
         "name": "python3",
