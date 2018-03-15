@@ -1,1 +1,1 @@
-python3 Main 30 32768 32768 data TLE
+python3 Main 30 262144 32768 data TLE

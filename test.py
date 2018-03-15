@@ -46,7 +46,7 @@ def RunTest(test_case_file):
   return passed
 
 passed = True
-for i in range(0, 20):
+for i in range(0, 21):
   if not RunTest("test_case" + str(i)):
     passed = False
 exit(0 if passed else 1)

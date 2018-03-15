@@ -1,19 +1,47 @@
-#!/usr/bin/python3
+import os
 
-import _thread
-import time
+print( os.path.dirname() )
 
-# 为线程定义一个函数
-def print_time( threadName, delay):
-   count = 0
-   while count < 5:
-      time.sleep(delay)
-      count += 1
-      print ("%s: %s" % ( threadName, time.ctime(time.time()) ))
+'''
 
-# 创建两个线程
-try:
-   _thread.start_new_thread( print_time, ("Thread-1", 2, ) )
-   _thread.start_new_thread( print_time, ("Thread-2", 4, ) )
-except:
-   print ("Error: 无法启动线程")
+
+import socket  
+phone = socket.socket(socket.AF_INET, socket.SOCK_STREAM)  
+phone.bind(('172.17.21.56', 8080))  
+  
+phone.listen(5)  
+  
+print('starting....')  
+conn, addr = phone.accept()  
+print(conn)  
+print('client addr', addr)  
+print('ready to read msg')  
+client_msg = conn.recv(1024)  
+print('client msg: %s' % client_msg)  
+conn.send(client_msg.upper())  
+  
+conn.close()  
+phone.close() 
+
+import threading
+
+# 创建全局ThreadLocal对象:
+local_school = threading.local()
+
+def process_student():
+    # 获取当前线程关联的student:
+    std = local_school.student
+    print('Hello, %s (in %s)' % (std, threading.current_thread().name))
+
+def process_thread(name):
+    # 绑定ThreadLocal的student:
+    local_school.student = name
+    process_student()
+
+t1 = threading.Thread(target= process_thread, args=('Alice',), name='Thread-A')
+t2 = threading.Thread(target= process_thread, args=('Bob',), name='Thread-B')
+t1.start()
+t2.start()
+t1.join()
+t2.join()
+'''
