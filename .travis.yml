@@ -12,9 +12,7 @@ install:
   - "sudo cp sources.list /etc/apt/sources.list"
   - "sudo apt-get update"
   - "sudo apt-get install build-essential pkg-config ruby rake libseccomp2 libseccomp-dev -y"
-  - "cd lib/lrun/"
-  - "LRUN_GROUP=travis make install"
-  - "cd ../../"
+  - "make install"
 
 script:
   - "make test"

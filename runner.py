@@ -6,6 +6,7 @@ import commands
 import util
 import compiler
 import lrun
+import subprocess
 
 running_argument = "lrun --max-cpu-time {cpu_time} --max-real-time {real_time} --max-output {output_limit} " \
                    "--max-memory {memory} --network false --remount-dev true --reset-env true " \
@@ -14,10 +15,9 @@ user_output_file = "user.out"
 
 def DoDiff(input_file, std_output_file, user_output_file, spj):
   if spj:
-    pass
+    return True
   else:
-    pass
-  return True
+    return subprocess.call(['wcmp.bin', input_file, std_output_file, user_output_file]) == 0
 
 def Judge(work_dir, data_dir, language_token, source_file, time_limit, memory_limit, output_limit, test_case, compile=False, spj=False):
   if int(memory_limit) < 1024:
@@ -80,7 +80,9 @@ def Run(language_token, source_file, cpu_time, real_time, memory, output_limit, 
      or result["TERMSIG"] != "0" or lrun_error or status != 0:
     return "RE"
 
-  if DoDiff(test_case + ".in", test_case + ".out", user_output_file, spj):
+  if DoDiff(path.join(data_dir, test_case + ".in"),
+            path.join(data_dir,test_case + ".out"),
+            path.join(work_dir, user_output_file), spj):
     return "AC\n" + str(result)
   else:
     return "WA"

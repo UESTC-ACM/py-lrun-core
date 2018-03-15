@@ -1,3 +1,6 @@
 [submodule "lib/lrun"]
 	path = lib/lrun
 	url = https://github.com/quark-zju/lrun.git
+[submodule "lib/testlib"]
+	path = lib/testlib
+	url = https://github.com/MikeMirzayanov/testlib.git
