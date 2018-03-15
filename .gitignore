@@ -60,3 +60,4 @@ target/
 *.bin
 *.class
 user.out
+.vscode
