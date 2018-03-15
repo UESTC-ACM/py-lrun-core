@@ -21,7 +21,6 @@ python_language_blacklist = "!execve:k,flock:k,ptrace:k,sync:k,fdatasync:k,fsync
                             "openat:k,sigprocmask:k,ugetrlimit:k,writev:k"
 
 
-
 judge_languages = {
     "gnu-gcc": {
         "name": "GNU GCC",
@@ -59,8 +58,8 @@ judge_languages = {
         "blacklist": java_language_blacklist,
         "compile_command": "javac {work_dir}/{source_file}.{extension} -d {work_dir}",
         "executive_command": "bash -c \"java -cp {work_dir} -Djava.security.manager " +
-                             "-Djava.security.policy==%s {source_file} \"" % (path.abspath(".") +
-                                                                            " < {input_file} > {output_file}"),
+                             "-Djava.security.policy==%s {source_file} \"" % (path.abspath(".")) +
+                             " < {input_file} > {output_file}",
     },
     "python3": {
         "name": "python3",
