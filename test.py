@@ -21,6 +21,8 @@ def RunTest(test_case_file):
         continue
       language_token, source_file, time, memory, output_limit, data, expected = wrapped.split(
           " ")
+      if language_token != "gnu-g++":
+        continue
       actual = runner.Judge(
           work_dir=work_dir,
           data_dir=work_dir,
