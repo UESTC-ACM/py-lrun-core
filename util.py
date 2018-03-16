@@ -37,7 +37,7 @@ judge_languages = {
         "extension": "cc",
         "id": "2",
         "blacklist": c_language_blacklist,
-        "compile_command": "g++ -static -w -O2 -DONLINE_JUDGE -fmax-errors=15 " +
+        "compile_command": "g++ -static -w -O2 -DONLINE_JUDGE --std=gnu++0x -fmax-errors=15 " +
                            "{work_dir}/{source_file}.{extension} -o " +
                            "{work_dir}/{source_file}.bin",
         "executive_command": "{work_dir}/{source_file}.bin < {input_file} > {output_file}",
