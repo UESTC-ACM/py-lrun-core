@@ -79,7 +79,8 @@ def Run(language_token, source_file, cpu_time, real_time, memory, output_limit, 
   if result["EXITCODE"] != "0" or result["SIGNALED"] != "0" \
      or result["TERMSIG"] != "0" or lrun_error or status != 0:
     return "RE"
-    
+  if float(result["CPUTIME"]) > float(cpu_time):
+    return "TLE"
   if DoDiff(path.join(data_dir, test_case + ".in"),
             path.join(data_dir,test_case + ".out"),
             path.join(work_dir, user_output_file), spj):

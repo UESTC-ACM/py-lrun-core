@@ -1,6 +1,5 @@
-import os
-
-print( os.path.dirname() )
+s = map( int , input().split() )
+print( sum( s ) + sum( s ) )
 
 '''
 
