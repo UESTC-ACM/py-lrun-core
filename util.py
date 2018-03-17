@@ -58,7 +58,7 @@ judge_languages = {
         "blacklist": java_language_blacklist,
         "compile_command": "javac {work_dir}/{source_file}.{extension} -d {work_dir}",
         "executive_command": "bash -c \"java -cp {work_dir} " +
-                             "{source_file} < {input_file} > {output_file} \" ",
+                             "{source_file}  < {input_file} > {output_file} \" ",
     },
     "python3": {
         "name": "python3",
