@@ -27,6 +27,8 @@ parser.add_argument('-o', '--output_limit', required = True, type = int, dest = 
                     help='the output limit, formatted as Kilobyte')
 parser.add_argument('-c', '--compile', action = 'store_true', dest = 'compile',
                     help='needs compile the source code or not')
+parser.add_argument('-spj', '--spj', action = 'store_true', dest = 'spj',
+                    help='needs spj check or not')
 
 args = parser.parse_args()
 print runner.Judge(work_dir = args.work_dir, \
@@ -37,5 +39,5 @@ print runner.Judge(work_dir = args.work_dir, \
                    memory_limit = args.memory_limit, \
                    test_case = args.test_case, \
                    output_limit = args.output_limit, \
-                   compile = args.compile)
-
+                   compile = args.compile, \
+                   spj = args.spj)
